@@ -24,11 +24,9 @@ model = load_model("models/imageclassifier.h5")
 
 # Define a function to preprocess the image
 def preprocess_image(img):
-    #img = image.load_img(img, target_size=(256, 256))
+    
     img = tf.image.resize(img, (256, 256))
-    #img = image.img_to_array(img)
-    #img = np.expand_dims(img, axis=0)
-    #img = img / 255.0  # Normalize pixel values
+    
     return img
 
 @app.route("/")
@@ -45,14 +43,7 @@ def predict():
     if "image" not in request.files:
         return jsonify({"prediction": "No image found"})
 
-    # Get the uploaded image
-    #img = request.form
-    #if request.method == "POST":
-        #img = request.files["image"]
-    #img = request.files["image"]
-    #print(img)
-    # Preprocess the image
-    #img = base64.b64encode(img.read()).decode('utf-8')
+    
     img = img.read()
     img = Image.open(io.BytesIO(img))
     img = preprocess_image(img)
