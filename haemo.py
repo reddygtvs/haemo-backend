@@ -1,20 +1,11 @@
 from flask import Flask, request, jsonify
-import base64
 from flask_cors import CORS
 from flask_cors import cross_origin
 from keras.models import load_model
 from PIL import Image
-import base64
 import tensorflow as tf
-from PIL import Image
 import io
-
-#from keras.preprocessing import image
-import keras.utils as image
 import numpy as np
-import json
-from werkzeug.datastructures import ImmutableMultiDict
-
 
 app = Flask(__name__)
 CORS(app)
@@ -36,19 +27,15 @@ def hello_world():
 @app.route("/predict", methods=["POST"])
 
 def predict():
-    # Check if image is uploaded
-    
     img = request.files["image"]
     
     if "image" not in request.files:
         return jsonify({"prediction": "No image found"})
 
-    
     img = img.read()
     img = Image.open(io.BytesIO(img))
     img = preprocess_image(img)
     
-
     # Make prediction
     prediction = model.predict(np.expand_dims(img/255, 0))
     # Get the predicted class label (assuming binary classification)

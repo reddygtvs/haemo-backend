@@ -1,9 +1,9 @@
-# fly.toml app configuration file generated for proud-rain-3990 on 2023-04-19T23:13:19+05:30
+# fly.toml app configuration file generated for fragrant-moon-7060 on 2023-04-20T15:46:53+05:30
 #
 # See https://fly.io/docs/reference/configuration/ for information about how to use this file.
 #
 
-app = "proud-rain-3990"
+app = "fragrant-moon-7060"
 kill_signal = "SIGINT"
 kill_timeout = 5
 primary_region = "ams"
