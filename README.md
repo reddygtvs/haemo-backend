@@ -2,6 +2,8 @@
 
 ## How to run commands
 
+**DISCLAIMER: ALL THESE COMMANDS WERE RUN ON MAC, IF THERE'S AN ERROR CHECK IF THERE'S AN EQUIVALENT WINDOWS VERSION FOR THE SAME**
+
 **Install virtualenv:**
 Make sure this is done to ensure there's no dependency hell going on
 
