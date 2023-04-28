@@ -1,13 +1,14 @@
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, send_from_directory
 from flask_cors import CORS
 from flask_cors import cross_origin
 from keras.models import load_model
 from PIL import Image
 import tensorflow as tf
+import os
 import io
 import numpy as np
 
-app = Flask(__name__)
+app = Flask(__name__, static_folder='build')
 CORS(app)
 
 # Load the h5 model
@@ -20,9 +21,17 @@ def preprocess_image(img):
     
     return img
 
-@app.route("/")
-def hello_world():
-    return "<p>Hello, World!</p>"
+#@app.route("/")
+#def hello_world():
+    #return "<p>Hello, World!</p>"
+@app.route("/", defaults={"path": ""})
+@app.route("/<path:path>")
+def serve(path):
+    if path != "" and os.path.exists(app.static_folder + "/" + path):
+        return send_from_directory(app.static_folder, path)
+    else:
+        return send_from_directory(app.static_folder, "index.html")
+
 
 @app.route("/predict", methods=["POST"])
 
