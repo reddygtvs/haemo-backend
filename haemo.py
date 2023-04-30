@@ -12,7 +12,7 @@ app = Flask(__name__, static_folder='build')
 CORS(app)
 
 # Load the h5 model
-model = load_model("models/imageclassifier.h5")
+model = load_model("models/binaryClassifierV2.h5")
 
 # Define a function to preprocess the image
 def preprocess_image(img):
