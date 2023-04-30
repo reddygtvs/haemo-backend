@@ -13,6 +13,7 @@ CORS(app)
 
 # Load the h5 model
 model = load_model("models/binaryClassifierV2.h5")
+classify = load_model("models/multiClass3.h5")
 
 # Define a function to preprocess the image
 def preprocess_image(img):
@@ -34,7 +35,6 @@ def serve(path):
 
 
 @app.route("/predict", methods=["POST"])
-
 def predict():
     img = request.files["image"]
     
@@ -49,6 +49,31 @@ def predict():
     prediction = model.predict(np.expand_dims(img/255, 0))
     # Get the predicted class label (assuming binary classification)
     prediction_label = "Blood sample has haemoprotozoan infection" if prediction > 0.5 else "Blood sample is not infected"
+
+    response = jsonify({"prediction": prediction_label})
+    response.headers.add('Access-Control-Allow-Origin', '*')
+    return response
+
+@app.route("/classify", methods=["POST"])
+def classification():
+    img = request.files["image"]
+    
+    if "image" not in request.files:
+        return jsonify({"prediction": "No image found"})
+
+    img = img.read()
+    img = Image.open(io.BytesIO(img))
+    img = preprocess_image(img)
+    
+    # Make prediction
+    result = classify.predict(np.expand_dims(img/255, 0))
+    prediction = np.argmax(result)
+    if prediction == 0:
+        prediction_label = "Disease type: Anaplasmosis"
+    elif prediction == 1:
+        prediction_label = "Disease type: Babesiosis"
+    else:
+        prediction_label = "Disease type: Theileriosis"
 
     response = jsonify({"prediction": prediction_label})
     response.headers.add('Access-Control-Allow-Origin', '*')
