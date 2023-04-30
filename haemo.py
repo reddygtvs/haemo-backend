@@ -69,11 +69,11 @@ def classification():
     result = classify.predict(np.expand_dims(img/255, 0))
     prediction = np.argmax(result)
     if prediction == 0:
-        prediction_label = "Disease type: Anaplasmosis"
+        prediction_label = "Anaplasmosis"
     elif prediction == 1:
-        prediction_label = "Disease type: Babesiosis"
+        prediction_label = "Babesiosis"
     else:
-        prediction_label = "Disease type: Theileriosis"
+        prediction_label = "Theileriosis"
 
     response = jsonify({"prediction": prediction_label})
     response.headers.add('Access-Control-Allow-Origin', '*')
